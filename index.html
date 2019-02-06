@@ -46,7 +46,8 @@
             </div>
 
             <div class="col-sm-9 border p-4">
-                <p><b>Instructions:</b> <button onclick="startGame()">Start a Game</button> then press keys on your
+                <p><b>Instructions:</b> Click the 'Start a Game' button <button onclick="startGame()">Start a Game</button>
+                    , then press keys on your
                     keyboard to make your letter guesses. Fill in the entire word before you're hung. <span class="text-danger"><b>Note</b>:
                         don't refresh the browser or you will lose your 'Wins' and 'Times Hung' stats.</span></p>
                 <h4 class="text-center spaced">
@@ -80,9 +81,27 @@
                     <span id="z">Z</span>
                 </h4>
                 <hr>
-                <h2 class="text-center letters text-primary my-5"><u>M</u> <u>A</u> <u>N</u> <u>G</u> <u>O</u></h2>
-                <p id="commentary" class="text-center font-weight-bolder"></p>
-                <h1 id="endText" class="text-center"></h1>
+                <!--<h2 id="theWord" class="text-center letters text-primary my-5"></h2>-->
+                <div class="row">
+                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
+                        <h2>M</h2>
+                    </div>
+                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
+                        <h2>A</h2>
+                    </div>
+                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
+                        <h2>N</h2>
+                    </div>
+                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
+                        <h2>G</h2>
+                    </div>
+                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
+                        <h2></h2>
+                    </div>
+                </div>
+                <h5 id="commentary" class="text-center font-weight-bolder"></h5>
+                <h1 id="winnerText" class="text-center text-success"></h1>
+                <h1 id="hungText" class="text-center text-danger"></h1>
                 <h5 id="errorMessage" class="text-center text-danger"></h5>
             </div>
 
@@ -122,8 +141,12 @@
             document.getElementById("hangmanImage").src = "images/hangman_00.png";
             // clear the commentary text
             document.getElementById("commentary").innerHTML = "";
-            // reset the endText message to be blank
-            document.getElementById("endText").innerHTML = "";
+            // clear the errorMessage text
+            document.getElementById("errorMessage").innerHTML = "";
+            // reset the winnerText message to be blank
+            document.getElementById("winnerText").innerHTML = "";
+            // reset the hungText message to be blank
+            document.getElementById("hungText").innerHTML = "";
             // make all the letters show as active
             letters.forEach(letterFunction);
             function letterFunction(value) {
@@ -133,6 +156,8 @@
             var misses = 1;
             // start the Misses Remaining counter displayed on the page at 6
             document.getElementById("missesRemaining").innerHTML = 6;
+            // format the randomWord and send it as theWord
+            // document.getElementById("theWord").innerHTML = randomWord;
             // end of housekeeping items
 
             // start the dynamic parts of the game
@@ -141,45 +166,43 @@
                 if (misses <= 6) {
                     // clear the commentary text
                     document.getElementById("commentary").innerHTML = "";
+                    // clear the errorMessage text
+                    document.getElementById("errorMessage").innerHTML = "";
                     var lowerCase = event.key.toLowerCase();
                     if ((lowerCase.length === 1) && (lowerCase.charCodeAt(0) >= 97 && lowerCase.charCodeAt(0) <= 122)) {
                         var keyPressed = lowerCase;
                     }
                     if (keyPressed) {
                         // since a letter was pressed, proceed
-                        for (var i = 0; i < letters.length; i++) {
-                            if (keyPressed == letters[i]) {
-                                // since the input letter was found in the array of available letters, decide if it matches the random word, then remove it from the letters array
-                                if (randomWord.match(keyPressed)) {
-                                    document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a correct guess!";
-                                    document.getElementById("commentary").style.color = "green";
-                                } else {
-                                    // since the letter was not part of the word increment the misses counter, update the 'Misses Remaining' counter on the page and update the hangman image
-                                    document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a NOT correct!";
-                                    document.getElementById("commentary").style.color = "red";
-                                    document.getElementById("hangmanImage").src = "images/hangman_0" + misses + ".png";
-                                    // update the 'Misses Remaining' counter on the page
-                                    document.getElementById("missesRemaining").innerHTML = 6 - misses;
-                                    misses++;
-                                }
-                                // style the select letter as inactive
-                                document.getElementById(keyPressed).style.color = "#dddddd";
-                                // make the selected letter inactive by removing it from the letters array
-                                var indexToRemove = letters.indexOf(keyPressed);
-                                letters.splice(indexToRemove, 1);
+                        var indexToRemove = letters.indexOf(keyPressed);
+                        if (indexToRemove >= 0) {
+                            // since the input letter was found in the array of available letters, decide if it matches the random word, then remove it from the letters array
+                            if (randomWord.match(keyPressed)) {
+                                document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a correct guess!";
+                            } else {
+                                // since the letter was not part of the word increment the misses counter, update the 'Misses Remaining' counter on the page and update the hangman image
+                                document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a NOT correct!";
+                                document.getElementById("hangmanImage").src = "images/hangman_0" + misses + ".png";
+                                // update the 'Misses Remaining' counter on the page
+                                document.getElementById("missesRemaining").innerHTML = 6 - misses;
+                                misses++;
                             }
-                            // document.getElementById("commentary").innerHTML = "'" + keyPressed + "' has already been used.";
+                            // style the select letter as inactive
+                            document.getElementById(keyPressed).style.color = "#dddddd";
+                            // make the selected letter inactive by removing it from the letters array
+                            letters.splice(indexToRemove, 1);
+                        } else {
+                            document.getElementById("commentary").innerHTML = "'" + keyPressed + "' has already been used.";
                         }
                         if (misses > 6) {
                             if (hung == 0) {
-                                document.getElementById("endText").innerHTML = "You've been HUNG!";
+                                document.getElementById("hungText").innerHTML = "You've been HUNG!";
                             } else if (hung == 4) {
-                                document.getElementById("endText").innerHTML = "You've been HUNG... had enough?";
+                                document.getElementById("hungText").innerHTML = "You've been HUNG... had enough?";
                             }
                             else {
-                                document.getElementById("endText").innerHTML = "You've been HUNG... again!";
+                                document.getElementById("hungText").innerHTML = "You've been HUNG... again!";
                             }
-                            document.getElementById("endText").style.color = "red";
                             hung++;
                             document.getElementById("hung").innerHTML = hung;
                         }

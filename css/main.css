@@ -9,4 +9,19 @@ body {
 
 .letters {
     font-size: 4em;
+    letter-spacing: .6em;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.border_bottom {
+    border-bottom: 5px solid #007bff;
+}
+
+h2 {
+    font-size: 2em;
+    color: #007bff;
+}
+
+.w-50px {
+    width: 50px;
 }
