@@ -81,24 +81,8 @@
                     <span id="z">Z</span>
                 </h4>
                 <hr>
-                <!--<h2 id="theWord" class="text-center letters text-primary my-5"></h2>-->
-                <div class="row">
-                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
-                        <h2>M</h2>
-                    </div>
-                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
-                        <h2>A</h2>
-                    </div>
-                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
-                        <h2>N</h2>
-                    </div>
-                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
-                        <h2>G</h2>
-                    </div>
-                    <div class="col-1-sm p-4 m-4 w-50px border_bottom">
-                        <h2></h2>
-                    </div>
-                </div>
+                <div id="theWord" class=" d-flex align-items-center justify-content-center"></div>
+
                 <h5 id="commentary" class="text-center font-weight-bolder"></h5>
                 <h1 id="winnerText" class="text-center text-success"></h1>
                 <h1 id="hungText" class="text-center text-danger"></h1>
@@ -156,8 +140,15 @@
             var misses = 1;
             // start the Misses Remaining counter displayed on the page at 6
             document.getElementById("missesRemaining").innerHTML = 6;
-            // format the randomWord and send it as theWord
-            // document.getElementById("theWord").innerHTML = randomWord;
+            // break up the randomWord into an array of letters, then format it to display to the browser
+            var randomWordArray = randomWord.split("");
+            var formattedImageCode = "";
+            for (var i = 0; i < randomWordArray.length; i++) {
+                formattedImageCode += '<img class="mx-2 my-5" src="images/blank.png">';
+            }
+            document.getElementById("theWord").innerHTML = formattedImageCode;
+            // initialize the correctGuessLetters array
+            var correctGuessLetters = [];
             // end of housekeeping items
 
             // start the dynamic parts of the game
@@ -175,13 +166,36 @@
                     if (keyPressed) {
                         // since a letter was pressed, proceed
                         var indexToRemove = letters.indexOf(keyPressed);
-                        if (indexToRemove >= 0) {
-                            // since the input letter was found in the array of available letters, decide if it matches the random word, then remove it from the letters array
+                        if (indexToRemove > -1) {
+                            // since the input letter was found in the array of available letters, decide if it matches the randomWord, then remove it from the letters array
                             if (randomWord.match(keyPressed)) {
-                                document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a correct guess!";
+                                // add the letter to the correctGuessLetters array
+                                correctGuessLetters.push(keyPressed);
+                                // formattedImageCode += '<img class="mx-2 my-5" src="images/blank.png">';
+                                // loop through randomWord letters and see if any of them match anything in correctGuessLetters
+                                var formattedImageCode = "";
+                                var counter = 0;
+                                
+                                for (var i = 0; i < randomWordArray.length; i++) {
+                                    for (var j = 0; j < correctGuessLetters.length; j++) {
+                                        if (randomWordArray.indexOf(correctGuessLetters) > -1) {
+                                            // document.getElementById("hungText").innerHTML = randomWordArray;
+                                            // the letter just guessed is part of randomWordArray
+                                            formattedImageCode += '<img class="mx-2 my-5" src="images/' + randomWordArray[i] + '.png">';
+                                        } else {
+                                            // the letter just guessed is NOT part of randomWord
+                                            counter++;
+                                            formattedImageCode += '<img class="mx-2 my-5" src="images/blank.png">';
+                                        }
+                                    }
+                                }
+                                console.log(counter);
+                                // display the new formattedImageCode code
+                                document.getElementById("theWord").innerHTML = formattedImageCode;
+                                document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' is a correct guess!";
                             } else {
-                                // since the letter was not part of the word increment the misses counter, update the 'Misses Remaining' counter on the page and update the hangman image
-                                document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a NOT correct!";
+                                // since the letter was not part of randonWord, increment the misses counter, update the 'Misses Remaining' counter on the page and update the hangman image
+                                document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' is NOT correct!";
                                 document.getElementById("hangmanImage").src = "images/hangman_0" + misses + ".png";
                                 // update the 'Misses Remaining' counter on the page
                                 document.getElementById("missesRemaining").innerHTML = 6 - misses;
@@ -192,7 +206,7 @@
                             // make the selected letter inactive by removing it from the letters array
                             letters.splice(indexToRemove, 1);
                         } else {
-                            document.getElementById("commentary").innerHTML = "'" + keyPressed + "' has already been used.";
+                            document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' has already been used.";
                         }
                         if (misses > 6) {
                             if (hung == 0) {
@@ -209,11 +223,7 @@
                     } else {
                         document.getElementById("errorMessage").innerHTML = "Only the letter keys are valid inputs when playing Hangman";
                     }
-
-                    // determine whether the key pressed is still active
-                    var activeCheck = letters.indexOf(keyPressed);
                 }
-                // set the events that will happen if you've been hung
             }
         }
 
