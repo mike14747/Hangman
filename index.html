@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <title>Fruit and Vegetable Hangman</title>
+</head>
+
+<body>
+
+    <div class="container my-2">
+
+        <div class="row bg-light border align-items-end">
+
+            <div class="col-sm-7">
+                <p class="mb-5"><b>Wins:</b> <span id="wins" class="mr-5"></span> <b>Times Hung:</b> <span id="hung"></span></p>
+                <h1 class="text-center text-success font-weight-bolder">Fruit and Vegetable Hangman</h1>
+            </div>
+
+            <div class="col-sm-5 d-flex align-items-center justify-content-center">
+                <img class="img-fluid" src="images/fruit_vegetable.png" alt="Fruit and Vegetable Hangman">
+            </div>
+
+        </div>
+
+        <div class="row bg-white">
+
+            <div class="col-sm-3 border p-4">
+                <img id="hangmanImage" class="img-fluid mb-4" src="images/hangman.png" alt="Hangman">
+                <p><b>Misses Remaining:</b> <span id="missesRemaining"></span></p>
+                <p><b>Random Word:</b> <span id="rWord"></span></p>
+            </div>
+
+            <div class="col-sm-9 border p-4">
+                <p><b>Instructions:</b> <button onclick="startGame()">Start a Game</button> then press keys on your
+                    keyboard to make your letter guesses. Fill in the entire word before you're hung. <span class="text-danger"><b>Note</b>:
+                        don't refresh the browser or you will lose your 'Wins' and 'Times Hung' stats.</span></p>
+                <h4 class="text-center spaced">
+                    <span id="a">A</span>
+                    <span id="b">B</span>
+                    <span id="c">C</span>
+                    <span id="d">D</span>
+                    <span id="e">E</span>
+                    <span id="f">F</span>
+                    <span id="g">G</span>
+                    <span id="h">H</span>
+                    <span id="i">I</span>
+                    <span id="j">J</span>
+                    <span id="k">K</span>
+                    <span id="l">L</span>
+                    <span id="m">M</span>
+                </h4>
+                <h4 class="text-center spaced">
+                    <span id="n">N</span>
+                    <span id="o">O</span>
+                    <span id="p">P</span>
+                    <span id="q">Q</span>
+                    <span id="r">R</span>
+                    <span id="s">S</span>
+                    <span id="t">T</span>
+                    <span id="u">U</span>
+                    <span id="v">V</span>
+                    <span id="w">W</span>
+                    <span id="x">X</span>
+                    <span id="y">Y</span>
+                    <span id="z">Z</span>
+                </h4>
+                <hr>
+                <h2 class="text-center letters text-primary my-5"><u>M</u> <u>A</u> <u>N</u> <u>G</u> <u>O</u></h2>
+                <p id="commentary" class="text-center font-weight-bolder"></p>
+                <h1 id="endText" class="text-center"></h1>
+                <h5 id="errorMessage" class="text-center text-danger"></h5>
+            </div>
+
+        </div>
+
+        <div class="row bg-light">
+
+            <div class="col-sm-12 border p-4 d-flex align-items-center justify-content-center">
+                <span class="small">Copyright &#169; 2019 mike14747</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        // set a constant for how many missed guesses equates to a loss
+        const missLimit = 6;
+        // start Wins and Times Hung variables at 0 and display them as such
+        var wins = 0;
+        document.getElementById("wins").innerHTML = wins;
+        var hung = 0;
+        document.getElementById("hung").innerHTML = hung;
+        // define startGame function
+        function startGame() {
+            // start all the housekeeping items for the game to start
+            // make an array of fruits and vegetables as possible word selections
+            var words = ["apple", "apricot", "asparagus", "avocado", "banana", "broccoli", "cabbage", "cantaloupe", "carrot", "celery", "coconut", "cucumber", "eggplant", "fennel", "guava", "grape", "jicama", "kohlrabi", "lettuce", "mango", "onion", "orange", "papaya", "parsnip", "peach", "pineapple", "potato", "pumpkin", "radish", "spinach", "tomato", "turnip", "zucchini"];
+            // re-initialize an array with all the letters in it
+            var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+            // do a test at picking a random word from the words array
+            var randomWord = words[Math.floor(Math.random() * words.length)];
+            // show the random word while still in the testing stage
+            document.getElementById("rWord").innerHTML = randomWord;
+            // show the empty gallows pic
+            document.getElementById("hangmanImage").src = "images/hangman_00.png";
+            // clear the commentary text
+            document.getElementById("commentary").innerHTML = "";
+            // reset the endText message to be blank
+            document.getElementById("endText").innerHTML = "";
+            // make all the letters show as active
+            letters.forEach(letterFunction);
+            function letterFunction(value) {
+                document.getElementById(value).style.color = "#212529";
+            }
+            // start the counter for the miss that you are on at 1
+            var misses = 1;
+            // start the Misses Remaining counter displayed on the page at 6
+            document.getElementById("missesRemaining").innerHTML = 6;
+            // end of housekeeping items
+
+            // start the dynamic parts of the game
+            // run this function when a key is pressed
+            document.onkeyup = function (event) {
+                if (misses <= 6) {
+                    // clear the commentary text
+                    document.getElementById("commentary").innerHTML = "";
+                    var lowerCase = event.key.toLowerCase();
+                    if ((lowerCase.length === 1) && (lowerCase.charCodeAt(0) >= 97 && lowerCase.charCodeAt(0) <= 122)) {
+                        var keyPressed = lowerCase;
+                    }
+                    if (keyPressed) {
+                        // since a letter was pressed, proceed
+                        for (var i = 0; i < letters.length; i++) {
+                            if (keyPressed == letters[i]) {
+                                // since the input letter was found in the array of available letters, decide if it matches the random word, then remove it from the letters array
+                                if (randomWord.match(keyPressed)) {
+                                    document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a correct guess!";
+                                    document.getElementById("commentary").style.color = "green";
+                                } else {
+                                    // since the letter was not part of the word increment the misses counter, update the 'Misses Remaining' counter on the page and update the hangman image
+                                    document.getElementById("commentary").innerHTML = "'" + keyPressed + "' is a NOT correct!";
+                                    document.getElementById("commentary").style.color = "red";
+                                    document.getElementById("hangmanImage").src = "images/hangman_0" + misses + ".png";
+                                    // update the 'Misses Remaining' counter on the page
+                                    document.getElementById("missesRemaining").innerHTML = 6 - misses;
+                                    misses++;
+                                }
+                                // style the select letter as inactive
+                                document.getElementById(keyPressed).style.color = "#dddddd";
+                                // make the selected letter inactive by removing it from the letters array
+                                var indexToRemove = letters.indexOf(keyPressed);
+                                letters.splice(indexToRemove, 1);
+                            }
+                            // document.getElementById("commentary").innerHTML = "'" + keyPressed + "' has already been used.";
+                        }
+                        if (misses > 6) {
+                            if (hung == 0) {
+                                document.getElementById("endText").innerHTML = "You've been HUNG!";
+                            } else if (hung == 4) {
+                                document.getElementById("endText").innerHTML = "You've been HUNG... had enough?";
+                            }
+                            else {
+                                document.getElementById("endText").innerHTML = "You've been HUNG... again!";
+                            }
+                            document.getElementById("endText").style.color = "red";
+                            hung++;
+                            document.getElementById("hung").innerHTML = hung;
+                        }
+                    } else {
+                        document.getElementById("errorMessage").innerHTML = "Only the letter keys are valid inputs when playing Hangman";
+                    }
+
+                    // determine whether the key pressed is still active
+                    var activeCheck = letters.indexOf(keyPressed);
+                }
+                // set the events that will happen if you've been hung
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

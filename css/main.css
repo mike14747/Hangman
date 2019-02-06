@@ -1,0 +1,12 @@
+body {
+    background-color: #eeffee;
+}
+
+.spaced {
+    letter-spacing: .6em;
+    line-height: 175%;
+}
+
+.letters {
+    font-size: 4em;
+}
