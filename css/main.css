@@ -3,7 +3,7 @@ body {
 }
 
 .spaced {
-    letter-spacing: .6em;
+    letter-spacing: 1em;
     line-height: 175%;
 }
 
@@ -20,8 +20,4 @@ body {
 h2 {
     font-size: 2em;
     color: #007bff;
-}
-
-.w-50px {
-    width: 50px;
 }
