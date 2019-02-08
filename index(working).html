@@ -30,24 +30,8 @@
 
 <body>
 
-    <audio id="startSound">
-        <source src="sounds/start.mp3" type="audio/mp3">
-    </audio>
-
     <audio id="wonSound">
-        <source src="sounds/tada.mp3" type="audio/mp3">
-    </audio>
-
-    <audio id="correctSound">
-        <source src="sounds/correct.mp3" type="audio/mp3">
-    </audio>
-
-    <audio id="wrongSound">
-        <source src="sounds/wrong.mp3" type="audio/mp3">
-    </audio>
-
-    <audio id="hungSound">
-        <source src="sounds/hung.mp3" type="audio/mp3">
+        <source src="sounds/tada.wav" type="audio/wav">
     </audio>
 
     <div class="container my-2">
@@ -77,17 +61,17 @@
             <div class="col-sm-9 border p-4">
                 <p><b>Instructions:</b> Press 'Any Key' to 'Start a Game', then press the letter keys on your keyboard
                     to make your letter guesses. Fill in the entire word before you're hung. At the end of every game, a
-                    new game will automatically start with a new random fruit or vegetable word. <span class="text-danger"><b>Note</b>:
+                    new game will start with a new randon fruit or vegetable. <span class="text-danger"><b>Note</b>:
                         don't refresh the browser or you will lose your 'Wins' and
                         'Times Hung' stats.</span></p>
 
-                <div id="letterList" class="text-center spaced h4"></div>
+                <h4 id="letterList" class="text-center spaced"></h4>
                 <hr>
-                <div id="commentary" class="text-center h5"></div>
+                <h5 id="commentary" class="text-center font-weight-bolder"></h5>
 
                 <div class="d-flex flex-row">
                     <div id="theWord" class="flex-fill text-center">
-                        <img class="img-fluid mx-2 my-5" src="images/start.png" alt="Random Fruit or Vegetable">
+                        <img class="img-fluid mx-2 my-5" src="images/start.png">
                     </div>
                 </div>
 
