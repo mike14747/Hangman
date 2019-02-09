@@ -4,22 +4,33 @@ $(document).ready(function () {
     document.getElementById("commentary").style.color = "#007bff";
     document.getElementById("commentary").innerHTML = "Press any Key to Start a Game!";
 
-    // initialize an array with all the letters in it to display on the page
-    var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    // create the main letters string as letterSpan
+    var lettersString = "abcdefghijklmnopqrstuvwxyz";
 
     // create a span element with an id for each letter and send to the browser in upper case
     var letterDiv = document.getElementById("letterList");
-    for (var i = 0; i < letters.length; i++) {
+    for (var i = 0; i < lettersString.length; i++) {
         // add a line break at the halfway point through the alphabet
         if (i == 13) {
             var newLetterSpan = document.createElement("br");
             letterDiv.appendChild(newLetterSpan);
         }
         var newLetterSpan = document.createElement("span");
-        newLetterSpan.setAttribute("id", letters[i]);
-        newLetterSpan.textContent = letters[i].toUpperCase();
+        newLetterSpan.setAttribute("id", lettersString.charAt(i));
+        if (i < 25) {
+            newLetterSpan.textContent = lettersString.charAt(i).toUpperCase() + " ";
+        } else {
+            newLetterSpan.textContent = lettersString.charAt(i).toUpperCase();
+        }
         letterDiv.appendChild(newLetterSpan);
     }
+
+    // initialize and format the image letter formatting variable, then display it in the browser as 8 question marks
+    var formattedImageCode = "";
+    for (var i = 1; i <= 8; i++) {
+        formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/start.png" alt="start">';
+    }
+    document.getElementById("theWord").innerHTML = formattedImageCode;
 
     // set a constant for how many missed guesses equates to a loss
     const missLimit = 6;
@@ -76,8 +87,8 @@ $(document).ready(function () {
 
     // define the main game function
     function startGame() {
-        // re-initialize an array with all the letters in it for the game logic
-        var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        // initialize or re-initialize, as the case may be, the array with all the letters in it for the game logic
+        var letters = lettersString.split("");
 
         // pick a random word from the words array
         var randomWord = variousWords.generateWord();
@@ -101,10 +112,10 @@ $(document).ready(function () {
         // start the Misses Remaining counter displayed on the page at missLimit
         document.getElementById("missesRemaining").innerHTML = missLimit;
 
-        // initialize, format the image arrangement variable, then display it in the browser
-        var formattedImageCode = "";
+        // display the blank image letters... one for each letter of the randomWord
+        formattedImageCode = "";
         for (var i = 0; i < randomWord.length; i++) {
-            formattedImageCode += '<img class="img-fluid mx-2 my-5" src="images/blank.png" alt="blank">';
+            formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/blank.png" alt="blank">';
         }
         document.getElementById("theWord").innerHTML = formattedImageCode;
 
@@ -114,7 +125,7 @@ $(document).ready(function () {
         // run this function when a key is pressed
         document.onkeyup = function (event) {
 
-            // make sure the key pressed was a letter
+            // make sure the key pressed is a letter
             var lowerCase = event.key.toLowerCase();
             if ((lowerCase.length === 1) && (lowerCase.charCodeAt(0) >= 97 && lowerCase.charCodeAt(0) <= 122)) {
                 var keyPressed = lowerCase;
@@ -136,7 +147,7 @@ $(document).ready(function () {
                         correctGuessLetters.push(keyPressed);
 
                         // loop through randomWord letters and see if any of them match anything in correctGuessLetters
-                        var formattedImageCode = "";
+                        formattedImageCode = "";
 
                         // reset the letterCounter to 0 before reconfiguring it for the current corrently guessed letter
                         var letterCounter = 0;
@@ -146,11 +157,11 @@ $(document).ready(function () {
                             // see if the current letter is part of randomWord
                             if (correctGuessLetters.indexOf(randomWord[i]) > -1) {
                                 // the letter just guessed is part of randomWord
-                                formattedImageCode += '<img class="img-fluid mx-2 my-5" src="images/' + randomWord[i] + '.png" alt="' + randomWord[i] + '">';
+                                formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/' + randomWord[i] + '.png" alt="' + randomWord[i] + '">';
                                 letterCounter++;
                             } else {
                                 // the letter just guessed is NOT part of randomWord
-                                formattedImageCode += '<img class="img-fluid mx-2 my-5" src="images/blank.png" alt="blank">';
+                                formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/blank.png" alt="blank">';
                             }
                         }
                         // display the new formattedImageCode code
