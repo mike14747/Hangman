@@ -7,9 +7,10 @@ $(document).ready(function () {
     // initialize an array with all the letters in it to display on the page
     var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-    // create a span element for each of the above letters, give each an appropriate id tag and have them display in the browser in upper case... plus add a line break at the halfway point
+    // create a span element with an id for each letter and send to the browser in upper case
     var letterDiv = document.getElementById("letterList");
     for (var i = 0; i < letters.length; i++) {
+        // add a line break at the halfway point through the alphabet
         if (i == 13) {
             var newLetterSpan = document.createElement("br");
             letterDiv.appendChild(newLetterSpan);
@@ -20,18 +21,17 @@ $(document).ready(function () {
         letterDiv.appendChild(newLetterSpan);
     }
 
-    // start all the housekeeping items for the game to start
     // set a constant for how many missed guesses equates to a loss
     const missLimit = 6;
+
     // start Wins and Times Hung variables at 0 and display them as such
     var wins = 0;
-    var hung = 0;
-    // display the number of wins and time hung
     document.getElementById("wins").innerHTML = wins;
+    var hung = 0;
     document.getElementById("hung").innerHTML = hung;
 
+    // assign all the possible word options and the function to pick a random one to an object
     var variousWords = {
-        // assign all the various random word options to this array
         "fruitVeg": ["apple", "apricot", "artichoke", "arugula", "asparagus", "avocado", "banana", "broccoli", "cabbage", "cantaloupe", "carrot", "celery", "coconut", "cucumber", "durian", "eggplant", "fennel", "guava", "grape", "grapefruit", "jicama", "kohlrabi", "lemon", "lettuce", "mango", "onion", "orange", "papaya", "parsnip", "peach", "pineapple", "pomegranate", "potato", "pumpkin", "radish", "spinach", "tomato", "turnip", "zucchini"],
 
         generateWord: function () {
@@ -39,7 +39,7 @@ $(document).ready(function () {
         }
     };
 
-    // show the welcome text, but include a delay based upon what event triggered it
+    // show the welcome text, but include a different delay based upon what event triggered it
     function welcomeText(delayTime) {
         setTimeout(function () {
             document.getElementById("commentary").style.color = "green";
@@ -47,6 +47,7 @@ $(document).ready(function () {
         }, delayTime);
     }
 
+    // run all tasks required if a player won the game
     function wonGame(word) {
         document.getElementById("wonSound").play();
         document.getElementById("commentary").style.color = "green";
@@ -57,6 +58,7 @@ $(document).ready(function () {
         startGame();
     }
 
+    // run all tasks required if a player lost the game
     function lostGame(word) {
         document.getElementById("hungSound").play();
         document.getElementById("commentary").style.color = "red";
@@ -72,7 +74,7 @@ $(document).ready(function () {
         startGame();
     }
 
-    // define startGame function
+    // define the main game function
     function startGame() {
         // re-initialize an array with all the letters in it for the game logic
         var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -117,6 +119,7 @@ $(document).ready(function () {
             if ((lowerCase.length === 1) && (lowerCase.charCodeAt(0) >= 97 && lowerCase.charCodeAt(0) <= 122)) {
                 var keyPressed = lowerCase;
             }
+
             if (keyPressed) {
                 // since a letter was pressed, proceed
 
@@ -127,7 +130,7 @@ $(document).ready(function () {
                 var indexToRemove = letters.indexOf(keyPressed);
 
                 if (indexToRemove > -1) {
-                    // since the input letter was found in the array of available letters, decide if it matches the randomWord, then remove it from the letters array
+                    // the input letter was active, decide if it matches the randomWord and remove it from the letters array
                     if (randomWord.match(keyPressed)) {
                         // add the letter to the correctGuessLetters array
                         correctGuessLetters.push(keyPressed);
