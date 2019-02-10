@@ -157,7 +157,7 @@ $(document).ready(function () {
                             // see if the current letter is part of randomWord
                             if (correctGuessLetters.indexOf(randomWord[i]) > -1) {
                                 // the letter just guessed is part of randomWord
-                                formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images" + randomWord[i] + ".png\" alt=\"" + randomWord[i] + "\">";
+                                formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/" + randomWord[i] + ".png\" alt=\"" + randomWord[i] + "\">";
                                 letterCounter++;
                             } else {
                                 // the letter just guessed is NOT part of randomWord
