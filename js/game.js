@@ -16,11 +16,11 @@ $(document).ready(function () {
             letterDiv.appendChild(newLetterSpan);
         }
         var newLetterSpan = document.createElement("span");
-        newLetterSpan.setAttribute("id", lettersString.charAt(i));
+        newLetterSpan.setAttribute("id", lettersString[i]);
         if (i < 25) {
-            newLetterSpan.textContent = lettersString.charAt(i).toUpperCase() + " ";
+            newLetterSpan.textContent = lettersString[i].toUpperCase() + " ";
         } else {
-            newLetterSpan.textContent = lettersString.charAt(i).toUpperCase();
+            newLetterSpan.textContent = lettersString[i].toUpperCase();
         }
         letterDiv.appendChild(newLetterSpan);
     }
@@ -28,7 +28,7 @@ $(document).ready(function () {
     // initialize and format the letter image formatting variable, then display it in the browser as 8 question marks
     var formattedImageCode = "";
     for (var i = 1; i <= 8; i++) {
-        formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/start.png\" alt=\"start\">";
+        formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/start.png" alt="start">';
     }
     document.getElementById("theWord").innerHTML = formattedImageCode;
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
     function welcomeText(delayTime) {
         setTimeout(function () {
             document.getElementById("commentary").style.color = "green";
-            document.getElementById("commentary").innerHTML = "Welcome to \"Fruit and Vegetable\" Hangman!";
+            document.getElementById("commentary").innerHTML = "Welcome to 'Fruit and Vegetable' Hangman!";
         }, delayTime);
     }
 
@@ -115,7 +115,7 @@ $(document).ready(function () {
         // display the blank letter images... one for each letter of the randomWord
         formattedImageCode = "";
         for (var i = 0; i < randomWord.length; i++) {
-            formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/blank.png\" alt=\"blank\">";
+            formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/blank.png" alt="blank">';
         }
         document.getElementById("theWord").innerHTML = formattedImageCode;
 
@@ -157,11 +157,11 @@ $(document).ready(function () {
                             // see if the current letter is part of randomWord
                             if (correctGuessLetters.indexOf(randomWord[i]) > -1) {
                                 // the letter just guessed is part of randomWord
-                                formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/" + randomWord[i] + ".png\" alt=\"" + randomWord[i] + "\">";
+                                formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/' + randomWord[i] + '.png" alt="' + randomWord[i] + '">';
                                 letterCounter++;
                             } else {
                                 // the letter just guessed is NOT part of randomWord
-                                formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/blank.png\" alt=\"blank\">";
+                                formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/blank.png" alt="blank">';
                             }
                         }
                         // display the new formattedImageCode code
@@ -172,7 +172,7 @@ $(document).ready(function () {
                             document.getElementById("correctSound").play();
                         }
                         document.getElementById("commentary").style.color = "#007bff";
-                        document.getElementById("commentary").innerHTML = "\"" + keyPressed.toUpperCase() + "\" is a correct guess!";
+                        document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' is a correct guess!";
                     } else {
                         // since the letter was not part of randomWord, increment the misses counter, update the 'Misses Remaining' counter on the page and update the hangman image
 
@@ -188,7 +188,7 @@ $(document).ready(function () {
                             document.getElementById("wrongSound").play();
                         }
                         document.getElementById("commentary").style.color = "red";
-                        document.getElementById("commentary").innerHTML = "\"" + keyPressed.toUpperCase() + "\" is NOT correct!";
+                        document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' is NOT correct!";
                     }
 
                     // style the select letter to appear as inactive in the browser
@@ -200,7 +200,7 @@ $(document).ready(function () {
                 } else {
                     document.getElementById("wrongSound").play();
                     document.getElementById("commentary").style.color = "black";
-                    document.getElementById("commentary").innerHTML = "\"" + keyPressed.toUpperCase() + "\" has already been used.";
+                    document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' has already been used.";
                 }
             } else {
                 document.getElementById("wrongSound").play();
