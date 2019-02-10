@@ -4,7 +4,7 @@ $(document).ready(function () {
     document.getElementById("commentary").style.color = "#007bff";
     document.getElementById("commentary").innerHTML = "Press any Key to Start a Game!";
 
-    // create the main letters string as letterSpan
+    // create the main letters string
     var lettersString = "abcdefghijklmnopqrstuvwxyz";
 
     // create a span element with an id for each letter and send to the browser in upper case
@@ -25,10 +25,10 @@ $(document).ready(function () {
         letterDiv.appendChild(newLetterSpan);
     }
 
-    // initialize and format the image letter formatting variable, then display it in the browser as 8 question marks
+    // initialize and format the letter image formatting variable, then display it in the browser as 8 question marks
     var formattedImageCode = "";
     for (var i = 1; i <= 8; i++) {
-        formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/start.png" alt="start">';
+        formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/start.png\" alt=\"start\">";
     }
     document.getElementById("theWord").innerHTML = formattedImageCode;
 
@@ -41,7 +41,7 @@ $(document).ready(function () {
     var hung = 0;
     document.getElementById("hung").innerHTML = hung;
 
-    // assign all the possible word options and the function to pick a random one to an object
+    // assign all the possible word options (and the function to pick a random one) to an object
     var variousWords = {
         "fruitVeg": ["apple", "apricot", "artichoke", "arugula", "asparagus", "avocado", "banana", "broccoli", "cabbage", "cantaloupe", "carrot", "celery", "coconut", "cucumber", "durian", "eggplant", "fennel", "guava", "grape", "grapefruit", "jicama", "kohlrabi", "lemon", "lettuce", "mango", "onion", "orange", "papaya", "parsnip", "peach", "pineapple", "pomegranate", "potato", "pumpkin", "radish", "spinach", "tomato", "turnip", "zucchini"],
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
     function welcomeText(delayTime) {
         setTimeout(function () {
             document.getElementById("commentary").style.color = "green";
-            document.getElementById("commentary").innerHTML = "Welcome to 'Fruit and Vegetable' Hangman!";
+            document.getElementById("commentary").innerHTML = "Welcome to \"Fruit and Vegetable\" Hangman!";
         }, delayTime);
     }
 
@@ -112,10 +112,10 @@ $(document).ready(function () {
         // start the Misses Remaining counter displayed on the page at missLimit
         document.getElementById("missesRemaining").innerHTML = missLimit;
 
-        // display the blank image letters... one for each letter of the randomWord
+        // display the blank letter images... one for each letter of the randomWord
         formattedImageCode = "";
         for (var i = 0; i < randomWord.length; i++) {
-            formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/blank.png" alt="blank">';
+            formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/blank.png\" alt=\"blank\">";
         }
         document.getElementById("theWord").innerHTML = formattedImageCode;
 
@@ -157,11 +157,11 @@ $(document).ready(function () {
                             // see if the current letter is part of randomWord
                             if (correctGuessLetters.indexOf(randomWord[i]) > -1) {
                                 // the letter just guessed is part of randomWord
-                                formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/' + randomWord[i] + '.png" alt="' + randomWord[i] + '">';
+                                formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images" + randomWord[i] + ".png\" alt=\"" + randomWord[i] + "\">";
                                 letterCounter++;
                             } else {
                                 // the letter just guessed is NOT part of randomWord
-                                formattedImageCode += '<img class="img-fluid img-letters my-5" src="images/blank.png" alt="blank">';
+                                formattedImageCode += "<img class=\"img-fluid img-letters my-5\" src=\"images/blank.png\" alt=\"blank\">";
                             }
                         }
                         // display the new formattedImageCode code
@@ -172,7 +172,7 @@ $(document).ready(function () {
                             document.getElementById("correctSound").play();
                         }
                         document.getElementById("commentary").style.color = "#007bff";
-                        document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' is a correct guess!";
+                        document.getElementById("commentary").innerHTML = "\"" + keyPressed.toUpperCase() + "\" is a correct guess!";
                     } else {
                         // since the letter was not part of randomWord, increment the misses counter, update the 'Misses Remaining' counter on the page and update the hangman image
 
@@ -188,7 +188,7 @@ $(document).ready(function () {
                             document.getElementById("wrongSound").play();
                         }
                         document.getElementById("commentary").style.color = "red";
-                        document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' is NOT correct!";
+                        document.getElementById("commentary").innerHTML = "\"" + keyPressed.toUpperCase() + "\" is NOT correct!";
                     }
 
                     // style the select letter to appear as inactive in the browser
@@ -200,7 +200,7 @@ $(document).ready(function () {
                 } else {
                     document.getElementById("wrongSound").play();
                     document.getElementById("commentary").style.color = "black";
-                    document.getElementById("commentary").innerHTML = "'" + keyPressed.toUpperCase() + "' has already been used.";
+                    document.getElementById("commentary").innerHTML = "\"" + keyPressed.toUpperCase() + "\" has already been used.";
                 }
             } else {
                 document.getElementById("wrongSound").play();
