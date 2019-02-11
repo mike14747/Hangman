@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    "use strict";
+
     // display the Press any Key to Start a Game message
     document.getElementById("commentary").style.color = "#007bff";
     document.getElementById("commentary").innerHTML = "Press any Key to Start a Game!";
