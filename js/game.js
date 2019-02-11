@@ -19,7 +19,7 @@ $(document).ready(function () {
         }
         var newLetterSpan = document.createElement("span");
         newLetterSpan.setAttribute("id", lettersString[i]);
-        if (i < 25) {
+        if (i < 25 && i != 12) {
             newLetterSpan.textContent = lettersString[i].toUpperCase() + " ";
         } else {
             newLetterSpan.textContent = lettersString[i].toUpperCase();
