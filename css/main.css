@@ -35,6 +35,8 @@ h2 {
     z-index: 2;
 }
 
+w-xs-50
+
 @media (max-width: 991.98px) {
     .spaced {
         letter-spacing: .3em;
@@ -57,5 +59,11 @@ h2 {
     }
     #image-header {
         margin-bottom: -10px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .w-xs-50 {
+        max-width: 33%;
     }
 }
